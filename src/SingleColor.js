@@ -1,15 +1,24 @@
 import React, { useState, useEffect } from 'react';
-// import rgbToHex from './utils';
+import rgbToHex from './utils';
 
 const SingleColor = ({ rgb, weight, index, hexColor }) => {
-	const [aleart, setAleart] = useState(false);
+	const [alert, setAlert] = useState(false);
 	const bgc = rgb.join(',');
+	const hexValue = `#${hexColor}`;
 	// const hex = rgbToHex(...rgb);
 
 	return (
-		<article className={`color`} style={{ backgroundColor: `rgb(${bgc})` }}>
+		<article
+			className={`color ${index > 10 && 'color-light'}`}
+			style={{ backgroundColor: `rgb(${bgc})` }}
+			onClick={() => {
+				setAlert(true);
+				navigator.navigator.clipboard.writeText(hexValue);
+			}}
+		>
 			<p className="percent-value">{weight}%</p>
-			<p className="color-value">{hexColor}</p>
+			<p className="color-value">{hexValue}</p>
+			{alert && <p className="alert">copied to clipboard</p>}
 		</article>
 	);
 };
